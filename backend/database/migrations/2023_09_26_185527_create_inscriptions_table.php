@@ -13,23 +13,17 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('users', function (Blueprint $table) {
+        Schema::create('inscriptions', function (Blueprint $table) {
             $table->id();
-            $table->string('name');
-            $table->string('email')->unique();
-            $table->bigInteger('phone')->nullable();
-            $table->string('password');
-            $table->timestamp('email_verified_at')->nullable();
-            $table->boolean('status');
-            $table->rememberToken();
+            $table->date('inscription_date');
             $table->timestamps();
 
-            // Relationship with table roles
+            // Relationship with table services
             // Help with tabine
-            $table->unsignedBigInteger('role_id');
-            $table->foreign('role_id')
+            $table->unsignedBigInteger('service_id');
+            $table->foreign('service_id')
                 ->references('id')
-                ->on('roles')
+                ->on('services')
                 ->onUpdate('cascade')
                 ->onDelete('restrict');
         });
@@ -42,6 +36,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('users');
+        Schema::dropIfExists('inscriptions');
     }
 };

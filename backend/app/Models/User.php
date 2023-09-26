@@ -17,10 +17,14 @@ class User extends Authenticatable
      *
      * @var array<int, string>
      */
+    // Reference columns on Database
     protected $fillable = [
         'name',
         'email',
         'password',
+        'phone',
+        'role_id',
+        'status'
     ];
 
     /**
@@ -41,4 +45,16 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+    // Relationship with Appicant One to One
+    public function applicant()
+    {
+        return $this->belongsTo('App\Models\Applicant', 'id', 'user_id');
+    }
+
+    // Relationship with Appicant One to One
+    public function role()
+    {
+        return $this->belongsTo('App\Models\role', 'role_id', 'id');
+    }
 }
