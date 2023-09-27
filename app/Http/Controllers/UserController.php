@@ -14,12 +14,20 @@ class UserController extends Controller
     public function index()
     {
         try {
-            $applicants = Applicant::all();
+            $applicants = $applicant = DB::table('users')
+                ->select(
+                    'applicants.id as id',
+                    'users.name as name',
+                    'users.email as email',
+                    'users.status as status',
+                    'applicants.document as document',
+                )->join('applicants', 'applicants.user_id', '=', 'users.id')
+                ->join('degrees', 'degrees.id', '=', 'applicants.degree_id')
+                ->get();
 
-            return response()->json([
-                'state' => true,
-                'data' => $applicants
-            ], 200);
+            // dd($applicants);
+
+            return view('users.index', compact('applicants'));
         } catch (\Throwable $th) {
             return response()->json([
                 'state' => false,
@@ -33,10 +41,7 @@ class UserController extends Controller
         try {
             $degrees = Degree::all();
 
-            return response()->json([
-                'state' => true,
-                'data' => $degrees
-            ], 200);
+            return view('users.formRegister', compact('degrees'));
         } catch (\Throwable $th) {
             return response()->json([
                 'state' => false,
@@ -223,6 +228,7 @@ class UserController extends Controller
             ], 201);
         } catch (\Throwable $th) {
             return response()->json([
+                'state' => false,
                 'message' => $th->getMessage(),
             ], 500);
         }

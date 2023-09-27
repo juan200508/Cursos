@@ -4,13 +4,12 @@ namespace App\Http\Controllers;
 
 use App\Models\Service;
 use App\Models\ServiceCategory;
-use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
 class ServiceController extends Controller
 {
-    public function indexEvents(Request $request)
+    public function index(Request $request)
     {
         try {
             // List of services type event
@@ -18,55 +17,39 @@ class ServiceController extends Controller
                 ->select(
                     'services.name as name',
                     'services.description as description',
-                    // Help with ChatGPT to format these dates to MM-DD
-                    DB::raw('DATE_FORMAT(services.start_date, "%m-%d") as start'),
-                    DB::raw('DATE_FORMAT(services.end_date, "%m-%d") as end'),
                     'services.status as status',
                     'services.category_id as categoryId',
                     'services_category.name as category',
+                    'services.status as status'
                 )
                 ->join('services_category', 'services_category.id', '=', 'services.category_id')
                 ->where('services.category_id', 1)
-                ->where('status', true)
+                // ->where('status', true)
+                // Help with ChatGPT to format these dates to name month and day
+                ->selectRaw('services.*, CONCAT(MONTHNAME(services.start_date), " ", DAY(services.start_date)) as start')
+                ->selectRaw('services.*, CONCAT(MONTHNAME(services.end_date), " ", DAY(services.end_date)) as end')
                 ->where(DB::raw('MONTH(services.start_date)'), $request->input('month'))
                 ->get();
 
-            return response()->json([
-                'state' => true,
-                'data' => $events
-            ], 200);
-        } catch (\Throwable $th) {
-            return response()->json([
-                'message' => $th->getMessage(),
-            ], 500);
-        }
-    }
-
-    public function indexSupports(Request $request)
-    {
-        try {
-            // List of services type support
             $supports = DB::table('services')
                 ->select(
                     'services.name as name',
                     'services.description as description',
-                    // Help with ChatGPT to format these dates to MM-DD
-                    DB::raw('DATE_FORMAT(services.start_date, "%m-%d") as start'),
-                    DB::raw('DATE_FORMAT(services.end_date, "%m-%d") as end'),
                     'services.status as status',
                     'services.category_id as categoryId',
                     'services_category.name as category',
+                    'services.status as status'
                 )
                 ->join('services_category', 'services_category.id', '=', 'services.category_id')
                 ->where('services.category_id', 2)
-                ->where('status', true)
+                // ->where('status', true)
+                // Help with ChatGPT to format these dates to name month and day
+                ->selectRaw('services.*, CONCAT(MONTHNAME(services.start_date), " ", DAY(services.start_date)) as start')
+                ->selectRaw('services.*, CONCAT(MONTHNAME(services.end_date), " ", DAY(services.end_date)) as end')
                 ->where(DB::raw('MONTH(services.start_date)'), $request->input('month'))
                 ->get();
 
-            return response()->json([
-                'state' => true,
-                'data' => $supports
-            ]);
+            return view('service.index', compact('events', 'supports'));
         } catch (\Throwable $th) {
             return response()->json([
                 'message' => $th->getMessage(),

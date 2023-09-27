@@ -8,8 +8,8 @@
     <title>Template</title>
 
     {{-- Styles --}}
-     <link rel="stylesheet" href="{{ asset('css/template.css') }}">
-     
+    <link rel="stylesheet" href="{{ asset('css/template.css') }}">
+
 
     {{-- Bootstrap --}}
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet"
@@ -32,31 +32,40 @@
     {{-- Nav Bar --}}
     <nav class="navbar navbar-expand-lg bg-white shadow-sm">
         <div class="container-fluid">
-          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-          </button>
-          <div class="collapse navbar-collapse" id="navbarSupportedContent">
-            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-              <li class="nav-item">
-                <a class="nav-link active" aria-current="page" href="#">Servicios</a>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link" href="#">Usuarios</a>
-              </li>
-            </ul>
-            <li class="nav-item dropdown d-flex mx-5">
-                <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                    <i class="uil uil-user icon"></i>
-                    User
-                </a>
-                <ul class="dropdown-menu">
-                  <li><a class="dropdown-item" href="#">Info</a></li>
-                  <li><a class="dropdown-item" href="#">Cerrar Sesión</a></li>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+                data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
+                aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                    <li class="nav-item">
+                        <a class="nav-link {{ request()->routeIs('services.index') ? 'active' : '' }}"
+                            aria-current="page" href="{{ route('services.index') }}">
+                            Servicios
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link {{ request()->routeIs('users.index') ? 'active' : '' }}"
+                            href="{{ route('users.index') }}">
+                            Usuarios
+                        </a>
+                    </li>
                 </ul>
-              </li>
-          </div>
+                <li class="nav-item dropdown d-flex mx-5">
+                    <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown"
+                        aria-expanded="false">
+                        <i class="uil uil-user icon"></i>
+                        User
+                    </a>
+                    <ul class="dropdown-menu">
+                        <li><a class="dropdown-item" href="#">Info</a></li>
+                        <li><a class="dropdown-item" href="#">Cerrar Sesión</a></li>
+                    </ul>
+                </li>
+            </div>
         </div>
-      </nav>
+    </nav>
 
     {{-- End Nav Bar --}}
     @yield('content')

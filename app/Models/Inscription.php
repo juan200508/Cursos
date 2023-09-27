@@ -28,6 +28,6 @@ class Inscription extends Model
     // Relationship with applicant Many to Many
     public function applicants()
     {
-        return $this->belongsToMany('App\Models\Applicant', 'inscriptions_applicants', 'applicant_id', 'inscription_id');
+        return $this->belongsToMany('App\Models\Applicant', 'inscriptions_applicants', 'inscription_id', 'applicant_id');
     }
 }

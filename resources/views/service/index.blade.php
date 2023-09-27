@@ -3,12 +3,17 @@
 @section('content')
     <div class="row d-flex justify-content-md-center p-3">
         <div class="col col-lg-2">
-            <select class="form-select" aria-label="Default select example">
-                <option selected>Filtrar</option>
-                <option value="7">Julio</option>
-                <option value="8">Agosto</option>
-                <option value="9">Septiembre</option>
-            </select>
+            <form action="{{ url('service') }}" method="GET">
+                <select class="form-select" aria-label="Default select example" name="month">
+                    <option disabled selected>Seleccione un filtro</option>
+                    <option value="7">Julio</option>
+                    <option value="8">Agosto</option>
+                    <option value="9">Septiembre</option>
+                    <option value="10">Octubre</option>
+                    <option value="11">Noviembre</option>
+                </select>
+                <button class="btn btn-sm my-1 btn-info"><i class="uil uil-filter px-1"></i>Filtrar</button>
+            </form>
         </div>
         <div class="col col-lg-2">
             <button type="button" class="btn btn-primary"><i class="uil uil-plus"></i> Crear evento</button>
@@ -17,43 +22,87 @@
     <div class="container-fluid p-4">
         <div class="row">
             <div class="col-6">
-                <h4 class="text-center p-4">Cursos</h4>
+                {{-- Card for courses --}}
+                <h4 class="text-center p-4">Cursos y Talleres</h4>
                 <div class="row border-end">
-                    <div class="col-6 pb-4">
-                        <div class="card shadow-sm ">
-                            <div class="card-body">
-                                <h5 class="card-title">Lógica y algoritmos I</h5>
-                                <p class="card-text"><small class="text-muted">Agosto - 15 2023</small></p>
-                                <p class="card-text">With supporting text below as a natural lead-in to additional content.
-                                </p>
-                                <div class="d-flex justify-content-center">
-                                    <a href="#" class="btn btn-danger mx-2">Eliminar</a>
-                                    <a href="#" class="btn btn-outline-primary mx-2">Editar</a>
+                    @foreach ($events as $event)
+                        <div class="col-6 pb-4">
+                            <div class="card shadow-sm ">
+                                <div class="card-body">
+                                    <h5 class="card-title">
+                                        {{ $event->name }} -
+                                        @if ($event->status === 1)
+                                            <span class="text-success">Activo</span>
+                                        @else
+                                            <span class="text-danger">Inactivo</span>
+                                        @endif
+                                    </h5>
+
+                                    <p class="card-text"><small class="text-muted">{{ $event->start }} to
+                                            {{ $event->end }}</small></p>
+                                    <p class="card-text">{{ $event->description }}</p>
+                                    <div class="d-flex justify-content-center">
+                                        @if ($event->status === 1)
+                                            <a href="#" class="btn btn-danger mx-2 button" id="disable"
+                                                data-id="{{ $event->id }}">
+                                                Desactivar
+                                            </a>
+                                        @else
+                                            <a href="#" class="btn btn-success mx-2 button" id="enable"
+                                                data-id="{{ $event->id }}">
+                                                Activar
+                                            </a>
+                                        @endif
+                                        <a href="#" class="btn btn-outline-primary mx-2">Editar</a>
+                                    </div>
                                 </div>
                             </div>
                         </div>
-                    </div>
+                    @endforeach
                 </div>
             </div>
             <div class="col-6">
                 <h4 class="text-center p-4">Apoyos</h4>
                 <div class="row">
-                    <div class="col-6 pb-4">
-                        <div class="card shadow-sm">
-                            <div class="card-body">
-                                <h5 class="card-title">Apoyo de sostenimiento</h5>
-                                <p class="card-text"><small class="text-muted">Agosto - 15 2023</small></p>
-                                <p class="card-text">With supporting text below as a natural lead-in to additional content.
-                                </p>
-                                <div class="d-flex justify-content-center">
-                                    <a href="#" class="btn btn-danger mx-2">Eliminar</a>
-                                    <a href="#" class="btn btn-outline-primary mx-2">Editar</a>
+                    {{-- Card for supports --}}
+                    @foreach ($supports as $support)
+                        <div class="col-6 pb-4">
+                            <div class="card shadow-sm ">
+                                <div class="card-body">
+                                    <h5 class="card-title">
+                                        {{ $support->name }} -
+                                        @if ($support->status === 1)
+                                            <span class="text-success">Activo</span>
+                                        @else
+                                            <span class="text-danger">Inactivo</span>
+                                        @endif
+                                    </h5>
+
+                                    <p class="card-text"><small class="text-muted">{{ $support->start }} to
+                                            {{ $support->end }}</small></p>
+                                    <p class="card-text">{{ $support->description }}</p>
+                                    <div class="d-flex justify-content-center">
+                                        @if ($support->status === 1)
+                                            <a href="#" class="btn btn-danger mx-2 button" id="disable"
+                                                data-id="{{ $support->id }}">
+                                                Desactivar
+                                            </a>
+                                        @else
+                                            <a href="#" class="btn btn-success mx-2 button" id="enable"
+                                                data-id="{{ $support->id }}">
+                                                Activar
+                                            </a>
+                                        @endif
+                                        <a href="#" class="btn btn-outline-primary mx-2">Editar</a>
+                                    </div>
                                 </div>
                             </div>
                         </div>
-                    </div>
+                    @endforeach
                 </div>
             </div>
         </div>
     </div>
+
+    @include('service.js')
 @endsection
