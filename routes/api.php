@@ -22,8 +22,6 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 });
 
 
-// ! These routes was tested on postman
-
 // Route::controller(UserController::class)->group(function () {
 //     Route::get('applicant', 'index')->name('applicant.index');
 //     Route::get('degrees', 'listDegrees')->name('degrees.list');
@@ -44,10 +42,4 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 //     Route::put('services/update', 'update')->name('services.update');
 //     Route::put('services/disable/{id}', 'disable')->name('services.disable');
 //     Route::put('services/enable/{id}', 'enable')->name('services.enable');
-// });
-
-// // Routes for the management of inscriptions
-// Route::controller(InscriptionController::class)->group(function(){
-//     Route::post('inscriptions/store', 'store')->name('inscriptions.store');
-//     Route::post('inscriptions/cancel', 'cancelInscription')->name('inscriptions.cancel');
 // });

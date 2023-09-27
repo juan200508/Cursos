@@ -51,7 +51,10 @@ Route::controller(InscriptionController::class)->group(function () {
     Route::post('inscriptions/cancel', 'cancelInscription')->name('inscriptions.cancel');
 });
 
-// Routes for views
+Route::get('service/index', function(){
+    return view('service.index');
+});
+
 
 Route::get('users/index', function () {
     return view('users.index');
