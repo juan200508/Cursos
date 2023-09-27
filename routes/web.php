@@ -52,4 +52,8 @@ Route::get('service/index', function(){
     return view('service.index');
 });
 
+Route::get('service/login', function(){
+    return view('service.login');
+});
+
 
