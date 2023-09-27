@@ -33,5 +33,17 @@
         })
     });
 
+// Method for create an applicant - ADMINISTRATOR
+let formCreate = document.querySelectorAll('#formCreate')
+
+formCreate.addEventListener('submit', (event) => {
+    event.preventDefault();
+
+    let formData = new FormData(formCreate);
+    const formObject = Object.fromEntries(formData);
+
+
+    console.log(formObject);
+})
 
 </script>

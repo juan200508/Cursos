@@ -5,13 +5,12 @@
 
     <div class="row justify-content-center mt-4">
         <div class="col-auto">
-
-            <button type="button" class="btn btn-primary text-white"><i class="uil uil-plus"></i> Crear aspirante</button>
+            <a href="{{ route('users.store') }}" class="btn btn-primary text-white">
+                <i class="uil uil-plus"></i> Crear aspirante
+            </a>
         </div>
 
     </div>
-
-
     <div class="container mt-4">
         <div class="card">
             <div class="card-header">

@@ -24,7 +24,7 @@ Route::get('/', function () {
 // Routes for the management of users
 Route::controller(UserController::class)->group(function () {
     Route::get('users', 'index')->name('users.index');
-    Route::get('degrees', 'listDegrees')->name('degrees.list');
+    Route::get('create', 'listDegrees')->name('users.store');
     Route::post('applicant/store', 'store')->name('applicant.store');
     Route::get('applicant/{id}', 'findApplicant')->name('applicant.find');
     Route::put('users/update', 'updateDetails')->name('applicant.update');
@@ -53,6 +53,10 @@ Route::controller(InscriptionController::class)->group(function () {
 // Route::get('service/index', function(){
 //     return view('service.index');
 // })->name('service.index');
+
+// Route::get('register/index', function(){
+//     return view('users.formRegister');
+// })->name('register.index');
 
 
 // Route::get('users/index', function () {

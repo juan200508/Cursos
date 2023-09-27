@@ -41,10 +41,7 @@ class UserController extends Controller
         try {
             $degrees = Degree::all();
 
-            return response()->json([
-                'state' => true,
-                'data' => $degrees
-            ], 200);
+            return view('users.formRegister', compact('degrees'));
         } catch (\Throwable $th) {
             return response()->json([
                 'state' => false,
