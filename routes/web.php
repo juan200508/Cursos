@@ -1,5 +1,9 @@
 <?php
 
+
+use App\Http\Controllers\InscriptionController;
+use App\Http\Controllers\ServiceController;
+use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -17,7 +21,7 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-
+// Routes for the management of users
 Route::controller(UserController::class)->group(function () {
     Route::get('applicant', 'index')->name('applicant.index');
     Route::get('degrees', 'listDegrees')->name('degrees.list');
@@ -29,6 +33,7 @@ Route::controller(UserController::class)->group(function () {
     Route::post('administrator/store', 'storeAdministrator')->name('administrator.store');
 });
 
+// Routes for the management of services
 Route::controller(ServiceController::class)->group(function () {
     Route::get('categories', 'listCategories')->name('cartegories.list');
     Route::get('services/events', 'indexEvents')->name('services.events');
@@ -40,10 +45,14 @@ Route::controller(ServiceController::class)->group(function () {
     Route::put('services/enable/{id}', 'enable')->name('services.enable');
 });
 
-// Routes for views
-
-Route::get('users/index', function(){
-    return view('users.index');
+// Routes for the management of inscriptions
+Route::controller(InscriptionController::class)->group(function () {
+    Route::post('inscriptions/store', 'store')->name('inscriptions.store');
+    Route::post('inscriptions/cancel', 'cancelInscription')->name('inscriptions.cancel');
 });
 
+// Routes for views
 
+Route::get('users/index', function () {
+    return view('users.index');
+});
