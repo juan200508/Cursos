@@ -89,6 +89,32 @@ class UserController extends Controller
         }
     }
 
+    public function storeAdministrator(Request $request)
+    {
+        try {
+            // Validate fields about the server
+
+            // Help with tabine for autocomplete some code lines
+            $user = User::create([
+                'name' => $request->input('name'),
+                'email' => $request->input('email'),
+                'phone' => $request->input('phone'),
+                'role_id' => 1,
+                'password' => Hash::make($request->input('password')),
+                'status' => true
+            ]);
+
+            return response()->json([
+                'state' => true,
+                'message' => 'Usuario creado correctamente',
+            ], 200);
+        } catch (\Throwable $th) {
+            return response()->json([
+                'message' => $th->getMessage(),
+            ], 500);
+        }
+    }
+
     public function findApplicant($id)
     {
         try {
