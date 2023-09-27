@@ -51,7 +51,7 @@
                     {{-- Input Address --}}
                     <div class="mb-3">
                         <label for="inputAddress" class="form-label fw-bold">Dirección</label>
-                        <input type="email" class="form-control shadow-sm" id="inputAddress"
+                        <input type="text" class="form-control shadow-sm" id="inputAddress"
                             placeholder="Escribe la dirección" name="adress">
                     </div>
 
