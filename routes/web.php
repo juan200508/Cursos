@@ -52,8 +52,8 @@ Route::get('service/index', function(){
     return view('service.index');
 });
 
-Route::get('register/index', function(){
-    return view('users.formRegister');
+Route::get('service/login', function(){
+    return view('service.login');
 });
 
 
