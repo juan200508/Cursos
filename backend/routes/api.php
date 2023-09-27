@@ -28,6 +28,7 @@ Route::controller(UserController::class)->group(function () {
     Route::get('applicant/{id}', 'findApplicant')->name('applicant.find');
     Route::put('applicant/update', 'updateDetails')->name('applicant.update');
     Route::put('applicant/disable/{id}', 'disableApplicant')->name('applicant.disable');
+    Route::put('applicant/enable/{id}', 'enableApplicant')->name('applicant.enable');
     Route::post('administrator/store', 'storeAdministrator')->name('administrator.store');
 });
 
@@ -38,4 +39,6 @@ Route::controller(ServiceController::class)->group(function () {
     Route::post('services/store', 'store')->name('services.store');
     Route::get('services/{id}', 'findService')->name('services.find');
     Route::put('services/update', 'update')->name('services.update');
+    Route::put('services/disable/{id}', 'disable')->name('services.disable');
+    Route::put('services/enable/{id}', 'enable')->name('services.enable');
 });

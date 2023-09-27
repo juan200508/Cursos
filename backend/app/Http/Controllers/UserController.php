@@ -207,4 +207,24 @@ class UserController extends Controller
             ], 500);
         }
     }
+
+    public function enableApplicant($id)
+    {
+        try {
+            $applicant = Applicant::findOrFail($id);
+
+            $applicant->user->update([
+                'status' => true
+            ]);
+
+            return response()->json([
+                'state' => true,
+                'message' => 'Usuario activado correctamente',
+            ], 201);
+        } catch (\Throwable $th) {
+            return response()->json([
+                'message' => $th->getMessage(),
+            ], 500);
+        }
+    }
 }

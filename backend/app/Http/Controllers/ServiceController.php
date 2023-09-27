@@ -188,4 +188,44 @@ class ServiceController extends Controller
             ], 500);
         }
     }
+
+    public function enable($id)
+    {
+        try {
+            $service = Service::findOrFail($id);
+
+            $service->update([
+                'status' => true
+            ]);
+
+            return response()->json([
+                'state' => true,
+                'message' => 'Servicio activado correctamente',
+            ], 201);
+        } catch (\Throwable $th) {
+            return response()->json([
+                'message' => $th->getMessage(),
+            ], 500);
+        }
+    }
+
+    public function disable($id)
+    {
+        try {
+            $service = Service::findOrFail($id);
+
+            $service->update([
+                'status' => false
+            ]);
+
+            return response()->json([
+                'state' => true,
+                'message' => 'Servicio desactivado correctamente',
+            ], 201);
+        } catch (\Throwable $th) {
+            return response()->json([
+                'message' => $th->getMessage(),
+            ], 500);
+        }
+    }
 }
