@@ -3,9 +3,9 @@
 @section('content')
     <!-- START USER FORM -->
 
-    <div class="container w-50 mt-5 mb-5 shadow-sm p-4">
+    <div class="container w-50 mt-5 mb-5 shadow p-4 bg-white rounded-4 px-5">
 
-        <form method="POST" id="formCreate" action="{{ route('applicant.store') }}">
+        <form method="POST" id="formCreate">
             @csrf
             <div class="row justify-content-center m-4">
                 <div class="col-auto">
@@ -51,7 +51,7 @@
                     {{-- Input Address --}}
                     <div class="mb-3">
                         <label for="inputAddress" class="form-label fw-bold">Dirección</label>
-                        <input type="email" class="form-control shadow-sm" id="inputAddress"
+                        <input type="text" class="form-control shadow-sm" id="inputAddress"
                             placeholder="Escribe la dirección" name="adress">
                     </div>
 
@@ -105,7 +105,8 @@
             {{-- Row bottom --}}
             <div class="row justify-content-center m-4">
                 <div class="col-auto">
-                    <button type="submit" class="btn btn-success text-white"><i class="uil uil-user icon"></i>
+                    <button type="submit" class="btn btn-success text-white">
+                        <i class="uil uil-user icon"></i>
                         Registrar
                     </button>
                 </div>

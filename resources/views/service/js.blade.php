@@ -34,5 +34,39 @@
         })
     });
 
+    // Method for create a service
+    let formCreate = document.querySelector('#formCreate')
 
+    formCreate.addEventListener('submit', function(event) {
+        event.preventDefault();
+
+        let formData = new FormData(formCreate);
+
+        axios.post('services/store', formData)
+            .then((result) => {
+                Swal.fire({
+                    icon: 'success',
+                    title: result.data.message,
+                    showConfirmButton: false,
+                    timer: 1700
+                }).then(() => {
+                    location.reload();
+                })
+            })
+            .catch((error) => {
+                Swal.fire({
+                    title: error.data.message,
+                    icon: 'error',
+                    confirmButtonText: 'Listo',
+                    showCloseButton: false,
+                    allowEscapeKey: false,
+                    allowOutsideClick: false,
+                })
+            })
+    })
+
+    // Capture message from update service
+    let formEdit = document.querySelector('#formEdit').addEventListener('submit', (event) => {
+        event.preventDefault()
+    })
 </script>

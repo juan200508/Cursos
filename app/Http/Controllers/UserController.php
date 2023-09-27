@@ -61,6 +61,8 @@ class UserController extends Controller
                 'degree_id' => 'required',
             ]);
 
+            $url = route('users.index');
+
             // Help with tabine for autocomplete some code lines
             $user = User::create([
                 'name' => $request->input('name'),
@@ -86,6 +88,7 @@ class UserController extends Controller
             return response()->json([
                 'state' => true,
                 'message' => 'Usuario creado correctamente',
+                'url' => $url,
             ], 200);
         } catch (\Throwable $th) {
             return response()->json([

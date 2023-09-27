@@ -49,7 +49,9 @@ class ServiceController extends Controller
                 ->where(DB::raw('MONTH(services.start_date)'), $request->input('month'))
                 ->get();
 
-            return view('service.index', compact('events', 'supports'));
+            $categories = ServiceCategory::all();
+
+            return view('service.index', compact('events', 'supports', 'categories'));
         } catch (\Throwable $th) {
             return response()->json([
                 'message' => $th->getMessage(),
@@ -158,7 +160,7 @@ class ServiceController extends Controller
                 'start_date' => $request->input('start_date'),
                 'end_date' => $request->input('end_date'),
                 'category_id' => $request->input('category_id'),
-                'status' => $request->input('status'),
+                'status' => true,
             ]);
 
             return response()->json([

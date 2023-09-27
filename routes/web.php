@@ -39,7 +39,7 @@ Route::controller(ServiceController::class)->group(function () {
     Route::get('service', 'index')->name('services.index');
     Route::post('services/store', 'store')->name('services.store');
     Route::get('services/{id}', 'findService')->name('services.find');
-    Route::put('services/update', 'update')->name('services.update');
+    Route::post('services/update', 'update')->name('services.update');
     Route::put('services/disable/{id}', 'disable')->name('services.disable');
     Route::put('services/enable/{id}', 'enable')->name('services.enable');
 });

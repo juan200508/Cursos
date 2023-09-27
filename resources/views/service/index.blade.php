@@ -1,22 +1,34 @@
 @extends('layouts.template')
 
 @section('content')
+    {{-- Include the create service modal --}}
+    @include('service.create')
     <div class="row d-flex justify-content-md-center p-3">
         <div class="col col-lg-2">
             <form action="{{ url('service') }}" method="GET">
-                <select class="form-select" aria-label="Default select example" name="month">
-                    <option disabled selected>Seleccione un filtro</option>
-                    <option value="7">Julio</option>
-                    <option value="8">Agosto</option>
-                    <option value="9">Septiembre</option>
-                    <option value="10">Octubre</option>
-                    <option value="11">Noviembre</option>
-                </select>
-                <button class="btn btn-sm my-1 btn-info"><i class="uil uil-filter px-1"></i>Filtrar</button>
+                <div class="row">
+                    <div class="col-2">
+                        <button class="btn btn-sm my-1 btn-info">
+                            <i class="uil uil-filter"></i>
+                        </button>
+                    </div>
+                    <div class="col-10">
+                        <select class="form-select" aria-label="Default select example" name="month">
+                            <option disabled selected>Filtrar</option>
+                            <option value="7">Julio</option>
+                            <option value="8">Agosto</option>
+                            <option value="9">Septiembre</option>
+                            <option value="10">Octubre</option>
+                            <option value="11">Noviembre</option>
+                        </select>
+                    </div>
+                </div>
             </form>
         </div>
         <div class="col col-lg-2">
-            <button type="button" class="btn btn-primary"><i class="uil uil-plus"></i> Crear evento</button>
+            <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#createService">
+                <i class="uil uil-plus"></i> Crear evento
+            </button>
         </div>
     </div>
     <div class="container-fluid p-4">
@@ -53,11 +65,14 @@
                                                 Activar
                                             </a>
                                         @endif
-                                        <a href="#" class="btn btn-outline-primary mx-2">Editar</a>
+                                        <a href="#" class="btn btn-outline-primary mx-2" data-bs-toggle="modal"
+                                            data-bs-target="#editService{{ $event->id }}">Editar</a>
                                     </div>
                                 </div>
                             </div>
                         </div>
+                        {{-- Include modal for edit a service --}}
+                        @include('service.edit')
                     @endforeach
                 </div>
             </div>
@@ -98,6 +113,7 @@
                                 </div>
                             </div>
                         </div>
+                        @include('service.edit')
                     @endforeach
                 </div>
             </div>

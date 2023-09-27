@@ -33,17 +33,39 @@
         })
     });
 
-// Method for create an applicant - ADMINISTRATOR
-let formCreate = document.querySelectorAll('#formCreate')
+    // Method for create an applicant - ADMINISTRATOR
+    let formCreate = document.querySelector('#formCreate')
 
-formCreate.addEventListener('submit', (event) => {
-    event.preventDefault();
+    formCreate.addEventListener('submit', (event) => {
+        event.preventDefault();
 
-    let formData = new FormData(formCreate);
-    const formObject = Object.fromEntries(formData);
+        let formData = new FormData(formCreate);
 
-
-    console.log(formObject);
-})
-
+        axios.post('applicant/store', formData)
+            .then((result) => {
+                Swal.fire({
+                    title: result.data.message,
+                    icon: 'success',
+                    confirmButtonText: 'Listo',
+                    showCloseButton: false,
+                    allowEscapeKey: false,
+                    allowOutsideClick: false,
+                }).then((reponse) => {
+                    if (reponse.isConfirmed) {
+                        window.location.href = result.data.url;
+                    }
+                })
+            })
+            .catch((error) => {
+                console.log(error);
+                Swal.fire({
+                    title: error.data.message,
+                    icon: 'error',
+                    confirmButtonText: 'Listo',
+                    showCloseButton: false,
+                    allowEscapeKey: false,
+                    allowOutsideClick: false,
+                })
+            })
+    })
 </script>
