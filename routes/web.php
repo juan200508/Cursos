@@ -23,21 +23,20 @@ Route::get('/', function () {
 
 // Routes for the management of users
 Route::controller(UserController::class)->group(function () {
-    Route::get('applicant', 'index')->name('applicant.index');
+    Route::get('users', 'index')->name('users.index');
     Route::get('degrees', 'listDegrees')->name('degrees.list');
     Route::post('applicant/store', 'store')->name('applicant.store');
     Route::get('applicant/{id}', 'findApplicant')->name('applicant.find');
-    Route::put('applicant/update', 'updateDetails')->name('applicant.update');
-    Route::put('applicant/disable/{id}', 'disableApplicant')->name('applicant.disable');
-    Route::put('applicant/enable/{id}', 'enableApplicant')->name('applicant.enable');
+    Route::put('users/update', 'updateDetails')->name('applicant.update');
+    Route::put('user/disable/{id}', 'disableApplicant')->name('applicant.disable');
+    Route::put('user/enable/{id}', 'enableApplicant')->name('applicant.enable');
     Route::post('administrator/store', 'storeAdministrator')->name('administrator.store');
 });
 
 // Routes for the management of services
 Route::controller(ServiceController::class)->group(function () {
     Route::get('categories', 'listCategories')->name('cartegories.list');
-    Route::get('services/events', 'indexEvents')->name('services.events');
-    Route::get('services/supports', 'indexSupports')->name('services.supports');
+    Route::get('service', 'index')->name('services.index');
     Route::post('services/store', 'store')->name('services.store');
     Route::get('services/{id}', 'findService')->name('services.find');
     Route::put('services/update', 'update')->name('services.update');
@@ -51,11 +50,11 @@ Route::controller(InscriptionController::class)->group(function () {
     Route::post('inscriptions/cancel', 'cancelInscription')->name('inscriptions.cancel');
 });
 
-Route::get('service/index', function(){
-    return view('service.index');
-});
+// Route::get('service/index', function(){
+//     return view('service.index');
+// })->name('service.index');
 
 
-Route::get('users/index', function () {
-    return view('users.index');
-});
+// Route::get('users/index', function () {
+//     return view('users.index');
+// })->name('users.index');
