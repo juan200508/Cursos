@@ -53,6 +53,14 @@
                             </a>
                         </li>
                     @endif
+                    @if (auth()->user()->role_id === 2)
+                    <li class="nav-item">
+                        <a class="nav-link {{ request()->routeIs('inscriptions') ? 'active' : '' }}"
+                            href="{{ route('inscriptions') }}">
+                            Mis inscripciones
+                        </a>
+                    </li>
+                    @endif
                 </ul>
                 <li class="nav-item dropdown d-flex mx-5">
                     <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown"
@@ -61,7 +69,13 @@
                         <strong>{{ auth()->user()->name }}</strong>
                     </a>
                     <ul class="dropdown-menu">
-                        <li><a class="dropdown-item" href="#">Info</a></li>
+                        @if (auth()->user()->role_id === 2)
+                            <li>
+                                <a class="dropdown-item" href="{{ route('applicant.edit', auth()->user()->id) }}">
+                                    Info
+                                </a>
+                            </li>
+                        @endif
                         <form action="{{ route('logout') }}" method="POST">
                             @csrf
                             <li><button class="dropdown-item" type="submit">Cerrar Sesión</button></li>

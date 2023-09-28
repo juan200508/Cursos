@@ -37,7 +37,7 @@
         <div class="row">
             <div class="col-6">
                 {{-- Card for courses --}}
-                <h4 class="text-center p-4">Cursos y Talleres</h4>
+                <h4 class="text-center p-4">Eventos</h4>
                 <div class="row border-end">
                     @foreach ($events as $event)
                         <div class="col-6 pb-4">
@@ -56,6 +56,7 @@
                                             {{ $event->end }}</small></p>
                                     <p class="card-text">{{ $event->description }}</p>
                                     <div class="d-flex justify-content-center">
+                                        {{-- Actions of the administrator --}}
                                         @if (auth()->user()->role_id === 1)
                                             @if ($event->status === 1)
                                                 <a href="#" class="btn btn-danger mx-2 button" id="disable"
@@ -68,18 +69,20 @@
                                                     Activar
                                                 </a>
                                             @endif
+                                            {{-- Actions of the applicant --}}
                                         @else
-                                            @if (!$applicant->inscriptions()->exists() && $event->status === 1)
-                                                <a href="#" class="btn btn-success mx-2 buttonIns" id="inscription"
+                                            {{-- Help with chapGPT for look the services that have an applicant --}}
+                                            @if ($services->contains('id', $event->id))
+                                                <a href="#" class="btn btn-danger mx-2 buttonIns" id="cancel"
                                                     data-id="{{ $event->id }}">
-                                                    Inscribirme
+                                                    Cancelar Inscripción
                                                 </a>
                                             @elseif ($event->status === 0)
                                                 {{-- If the service is inactive, you can't inscribated --}}
                                             @else
-                                                <a href="#" class="btn btn-danger mx-2 buttonIns" id="cancel"
+                                                <a href="#" class="btn btn-success mx-2 buttonIns" id="inscription"
                                                     data-id="{{ $event->id }}">
-                                                    Cancelar Inscripción
+                                                    Inscribirme
                                                 </a>
                                             @endif
                                         @endif
@@ -118,6 +121,7 @@
                                             {{ $support->end }}</small></p>
                                     <p class="card-text">{{ $support->description }}</p>
                                     <div class="d-flex justify-content-center">
+                                        {{-- Actions of the Administrator --}}
                                         @if (auth()->user()->role_id === 1)
                                             @if ($support->status === 1)
                                                 <a href="#" class="btn btn-danger mx-2 button" id="disable"
@@ -130,18 +134,20 @@
                                                     Activar
                                                 </a>
                                             @endif
+                                            {{-- Actions of the applicant --}}
                                         @else
-                                            @if (!$applicant->inscriptions()->exists() && $event->status === 1)
-                                                <a href="#" class="btn btn-success mx-2 buttonIns" id="inscription"
-                                                    data-id="{{ $support->id }}">
-                                                    Inscribirme
-                                                </a>
-                                            @elseif ($event->status === 0)
-                                                {{-- If the service is inactive, you can't inscribated --}}
-                                            @else
+                                            {{-- Help with chapGPT for look the services that have an applicant --}}
+                                            @if ($services->contains('id', $support->id))
                                                 <a href="#" class="btn btn-danger mx-2 buttonIns" id="cancel"
                                                     data-id="{{ $support->id }}">
                                                     Cancelar Inscripción
+                                                </a>
+                                            @elseif ($support->status === 0)
+                                                {{-- If the service is inactive, you can't inscribated --}}
+                                            @else
+                                                <a href="#" class="btn btn-success mx-2 buttonIns" id="inscription"
+                                                    data-id="{{ $support->id }}">
+                                                    Inscribirme
                                                 </a>
                                             @endif
                                         @endif

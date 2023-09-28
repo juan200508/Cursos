@@ -55,7 +55,7 @@
                                 <h1>Iniciar sesión</h1>
                             </div>
                             <div class="input-group mb-4">
-                                <input type="text" class="form-control form-control-lg bg-light fs-6"
+                                <input type="email" class="form-control form-control-lg bg-light fs-6"
                                     placeholder="Correo electrónico" name="email">
                             </div>
                             <div class="input-group mb-4">

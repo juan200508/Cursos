@@ -236,4 +236,89 @@ class UserController extends Controller
             ], 500);
         }
     }
+
+    public function editApplicant($id)
+    {
+        try {
+            $applicant = DB::table('applicants')
+                ->select(
+                    'users.id',
+                    'users.name as name',
+                    'users.email as email',
+                    'users.phone as phone',
+                    'applicants.document as document',
+                    'applicants.gender as gender',
+                    'applicants.address as address',
+                    'applicants.social_class as social_class',
+                    'applicants.birth_date as birth_date',
+                    'applicants.degree_id as degreeId',
+                    'degrees.name as degree',
+                )
+                ->where('user_id', $id)
+                ->join('users', 'users.id', '=', 'applicants.user_id')
+                ->join('degrees', 'degrees.id', '=', 'applicants.degree_id')
+                ->first();
+
+            // dd($applicant);
+            $degrees = Degree::all();
+
+            return view('users.edit', compact('applicant', 'degrees'));
+        } catch (\Throwable $th) {
+            return response()->json([
+                'state' => false,
+                'message' => $th->getMessage(),
+            ], 500);
+        }
+    }
+
+    public function updateApplicant(Request $request)
+    {
+        try {
+            try {
+                // Validate fields about the server
+                $request->validate([
+                    'name' => 'required',
+                    'email' => 'required|email',
+                    'document' => 'required',
+                    'degree_id' => 'required',
+                ]);
+
+                $url = route('services.index');
+                $applicant = Applicant::where('user_id', $request->input('id'))->first();
+
+                // dd($applicant);
+
+                // Help with tabine for autocomplete some code lines
+                $applicant->user()->update([
+                    'name' => $request->input('name'),
+                    'email' => $request->input('email'),
+                    'phone' => $request->input('phone'),
+                    'password' => Hash::make($request->input('document')),
+                ]);
+
+
+                // Help with tabine for autocomplete some code lines
+                $applicant->update([
+                    'document' => $request->input('document'),
+                    'gender' => $request->input('gender'),
+                    'social_class' => $request->input('social_class'),
+                    'birth_date' => $request->input('birth_date'),
+                    'address' => $request->input('address'),
+                    'degree_id' => $request->input('degree_id'),
+                ]);
+
+                return response()->json([
+                    'state' => true,
+                    'message' => 'Datos actualizados correctamente',
+                    'url' => $url,
+                ], 200);
+            } catch (\Throwable $th) {
+                return response()->json([
+                    'message' => $th->getMessage(),
+                ], 500);
+            }
+        } catch (\Throwable $th) {
+            //throw $th;
+        }
+    }
 }

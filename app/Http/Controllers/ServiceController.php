@@ -52,11 +52,15 @@ class ServiceController extends Controller
 
             $categories = ServiceCategory::all();
 
-            $applicant = Applicant::where('user_id', auth()->user()->id);
-            $applicant->inscriptions()->exists();
+            // Help with chapGPT to list the services that an applicant has
+            if (auth()->user()->role_id === 2) {
+                $applicant = Applicant::find(auth()->user()->id);
+                $services = $applicant->inscriptions()->with('service')->get()->pluck('service');
+            } else {
+                $services = 0;
+            }
 
-
-            return view('service.index', compact('events', 'supports', 'categories', 'applicant'));
+            return view('service.index', compact('events', 'supports', 'categories', 'services'));
         } catch (\Throwable $th) {
             return response()->json([
                 'message' => $th->getMessage(),
@@ -212,6 +216,22 @@ class ServiceController extends Controller
                 'state' => true,
                 'message' => 'Servicio desactivado correctamente',
             ], 201);
+        } catch (\Throwable $th) {
+            return response()->json([
+                'message' => $th->getMessage(),
+            ], 500);
+        }
+    }
+
+    public function inscriptions()
+    {
+        try {
+            $applicant = Applicant::find(auth()->user()->id);
+            $services = $applicant->inscriptions()->with('service')->get()->pluck('service');
+
+            // dd($services);
+
+            return view('service.inscriptions', compact('services', 'applicant'));
         } catch (\Throwable $th) {
             return response()->json([
                 'message' => $th->getMessage(),

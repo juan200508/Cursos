@@ -42,8 +42,6 @@ class InscriptionController extends Controller
                 ->pluck('id')
                 ->first();
 
-            dd($inscription);
-
             $cancelInscription = Inscription::findOrFail($inscription);
             $cancelInscription->applicants()->detach();
             $cancelInscription->delete();

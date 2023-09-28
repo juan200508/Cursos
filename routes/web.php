@@ -29,22 +29,24 @@ Route::middleware('auth')->group(function () {
             Route::get('create', 'listDegrees')->name('users.store');
             Route::post('applicant/store', 'store')->name('applicant.store');
             Route::get('applicant/{id}', 'findApplicant')->name('applicant.find');
-            Route::put('users/update', 'updateDetails')->name('applicant.update');
             Route::put('user/disable/{id}', 'disableApplicant')->name('applicant.disable');
             Route::put('user/enable/{id}', 'enableApplicant')->name('applicant.enable');
             Route::post('administrator/store', 'storeAdministrator')->name('administrator.store');
+        });
+
+        Route::controller(ServiceController::class)->group(function () {
+            Route::get('categories', 'listCategories')->name('cartegories.list');
+            Route::post('services/store', 'store')->name('services.store');
+            Route::get('services/{id}', 'findService')->name('services.find');
+            Route::post('services/update', 'update')->name('services.update');
+            Route::put('services/disable/{id}', 'disable')->name('services.disable');
+            Route::put('services/enable/{id}', 'enable')->name('services.enable');
         });
     });
 
     // Routes for the management of services
     Route::controller(ServiceController::class)->group(function () {
-        Route::get('categories', 'listCategories')->name('cartegories.list');
         Route::get('service', 'index')->name('services.index');
-        Route::post('services/store', 'store')->name('services.store');
-        Route::get('services/{id}', 'findService')->name('services.find');
-        Route::post('services/update', 'update')->name('services.update');
-        Route::put('services/disable/{id}', 'disable')->name('services.disable');
-        Route::put('services/enable/{id}', 'enable')->name('services.enable');
     });
 
     // Routes for the management of inscriptions
@@ -52,6 +54,12 @@ Route::middleware('auth')->group(function () {
         Route::controller(InscriptionController::class)->group(function () {
             Route::post('inscriptions/store/{id}', 'store')->name('inscriptions.store');
             Route::post('inscriptions/cancel/{id}', 'cancelInscription')->name('inscriptions.cancel');
+        });
+
+        Route::get('applicant/{id}', [UserController::class, 'editApplicant'])->name('applicant.edit');
+        Route::post('applicant/update', [UserController::class, 'updateApplicant'])->name('applicant.update');
+        Route::controller(ServiceController::class)->group(function () {
+            Route::get('inscriptions', 'inscriptions')->name('inscriptions');
         });
     });
 });
@@ -61,19 +69,6 @@ Route::controller(AuthController::class)->group(function () {
     Route::post('auth/login', 'login')->name('login');
     Route::post('auth/logout', 'logout')->name('logout');
 });
-
-// Route::get('service/index', function(){
-//     return view('service.index');
-// })->name('service.index');
-
-// Route::get('register/index', function(){
-//     return view('users.formRegister');
-// })->name('register.index');
-
-
-// Route::get('users/index', function () {
-//     return view('users.index');
-// })->name('users.index');
 
 Route::get('login', function () {
     return view('autentication.login');

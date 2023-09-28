@@ -116,6 +116,7 @@
             console.log(id);
             axios.post(url)
                 .then((result) => {
+                    console.log(result);
                     Swal.fire({
                         icon: 'info',
                         title: result.data.message,
@@ -126,6 +127,7 @@
                     })
                 })
                 .catch((error) => {
+                    console.log(error);
                     Swal.fire({
                         position: 'top-end',
                         icon: 'error',
