@@ -66,7 +66,36 @@
     })
 
     // Capture message from update service
-    let formEdit = document.querySelector('#formEdit').addEventListener('submit', (event) => {
-        event.preventDefault()
+    let formEdit = document.querySelectorAll('#formEdit')
+
+    formEdit.forEach((form) => {
+        form.addEventListener('submit', (event) => {
+            event.preventDefault()
+
+            let formData = new FormData(form);
+
+            // Help with Tabine to autocomplete some code lines
+            axios.post('{{ route('services.update') }}', formData)
+                .then((result) => {
+                    Swal.fire({
+                        icon:'success',
+                        title: result.data.message,
+                        showConfirmButton: false,
+                        timer: 1700
+                    }).then(() => {
+                        location.reload();
+                    })
+                })
+                .catch((error) => {
+                    Swal.fire({
+                    title: error.response.data.message,
+                    icon: 'error',
+                    confirmButtonText: 'Listo',
+                    showCloseButton: false,
+                    allowEscapeKey: false,
+                    allowOutsideClick: false,
+                })
+                });
+        })
     })
 </script>

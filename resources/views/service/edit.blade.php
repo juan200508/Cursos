@@ -9,7 +9,7 @@
             <div class="modal-body">
                 {{-- Create Service Form --}}
 
-                <form method="POST" id="formEdit" action="{{ route('services.update') }}">
+                <form method="POST" id="formEdit">
                     @csrf
                     {{-- Row top --}}
                     <input type="text" name="id" value="{{ $event->id }}">
