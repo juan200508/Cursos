@@ -45,22 +45,27 @@
                             Servicios
                         </a>
                     </li>
-                    <li class="nav-item">
-                        <a class="nav-link {{ request()->routeIs('users.index') ? 'active' : '' }}"
-                            href="{{ route('users.index') }}">
-                            Usuarios
-                        </a>
-                    </li>
+                    @if (auth()->user()->role_id === 1)
+                        <li class="nav-item">
+                            <a class="nav-link {{ request()->routeIs('users.index') ? 'active' : '' }}"
+                                href="{{ route('users.index') }}">
+                                Usuarios
+                            </a>
+                        </li>
+                    @endif
                 </ul>
                 <li class="nav-item dropdown d-flex mx-5">
                     <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown"
                         aria-expanded="false">
                         <i class="uil uil-user icon"></i>
-                        Admin
+                        <strong>{{ auth()->user()->name }}</strong>
                     </a>
                     <ul class="dropdown-menu">
                         <li><a class="dropdown-item" href="#">Info</a></li>
-                        <li><a class="dropdown-item" href="#">Cerrar Sesión</a></li>
+                        <form action="{{ route('logout') }}" method="POST">
+                            @csrf
+                            <li><button class="dropdown-item" type="submit">Cerrar Sesión</button></li>
+                        </form>
                     </ul>
                 </li>
             </div>

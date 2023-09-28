@@ -18,26 +18,6 @@
 </head>
 
 <body>
-    {{-- <div class="">
-        <div class="mx-auto bg-white w-25 p-5 d-flex align-items-center justify-content-center vh-100 shadow-lg">
-            <form class="row mx-auto">
-                <div class="">
-                    <h5 class="text-center pb-4">INICIAR SESIÓN</h5>
-                </div>
-                <div class="mb-3">
-                    <label for="exampleInputEmail1" class="form-label">Correo eléctronico</label>
-                    <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
-                </div>
-                <div class="mb-3">
-                    <label for="exampleInputPassword1" class="form-label">Contraseña</label>
-                    <input type="password" class="form-control" id="exampleInputPassword1">
-                </div>
-                <button type="submit" class="btn btn-primary mx-auto w-50">Iniciar sesión</button>
-            </form>
-        </div>
-    </div> --}}
-
-
     {{-- Style animation background --}}
     <div class="area">
         {{-- Items animation --}}
@@ -67,24 +47,24 @@
                     </div>
                 </div>
                 {{-- Right Box --}}
-
                 <div class="col-md-6 right-box justify-content-center">
                     <div class="row align-items-center">
-                        <form class="mt-3">
+                        <form class="mt-3" action="{{ route('login') }}" method="POST">
+                            @csrf
                             <div class="header-text mb-4 text-center">
                                 <h1>Iniciar sesión</h1>
                             </div>
                             <div class="input-group mb-4">
                                 <input type="text" class="form-control form-control-lg bg-light fs-6"
-                                    placeholder="Correo electrónico">
+                                    placeholder="Correo electrónico" name="email">
                             </div>
                             <div class="input-group mb-4">
                                 <input type="password" class="form-control form-control-lg bg-light fs-6"
-                                    placeholder="Contraseña">
+                                    placeholder="Contraseña" name="password">
                             </div>
                             <div class="input-group mb-2 d-flex justify-content-between">
                             </div>
-                            
+
                             {{-- Button login --}}
                             <div class="input-group mb-3">
                                 <button class="btn btn-lg btn-primary w-100 fs-6">Iniciar sesión</button>

@@ -25,11 +25,13 @@
                 </div>
             </form>
         </div>
-        <div class="col col-lg-2">
-            <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#createService">
-                <i class="uil uil-plus"></i> Crear evento
-            </button>
-        </div>
+        @if (auth()->user()->role_id === 1)
+            <div class="col col-lg-2">
+                <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#createService">
+                    <i class="uil uil-plus"></i> Crear evento
+                </button>
+            </div>
+        @endif
     </div>
     <div class="container-fluid p-4">
         <div class="row">
@@ -54,19 +56,37 @@
                                             {{ $event->end }}</small></p>
                                     <p class="card-text">{{ $event->description }}</p>
                                     <div class="d-flex justify-content-center">
-                                        @if ($event->status === 1)
-                                            <a href="#" class="btn btn-danger mx-2 button" id="disable"
-                                                data-id="{{ $event->id }}">
-                                                Desactivar
-                                            </a>
+                                        @if (auth()->user()->role_id === 1)
+                                            @if ($event->status === 1)
+                                                <a href="#" class="btn btn-danger mx-2 button" id="disable"
+                                                    data-id="{{ $event->id }}">
+                                                    Desactivar
+                                                </a>
+                                            @else
+                                                <a href="#" class="btn btn-success mx-2 button" id="enable"
+                                                    data-id="{{ $event->id }}">
+                                                    Activar
+                                                </a>
+                                            @endif
                                         @else
-                                            <a href="#" class="btn btn-success mx-2 button" id="enable"
-                                                data-id="{{ $event->id }}">
-                                                Activar
-                                            </a>
+                                            @if (!$applicant->inscriptions()->exists() && $event->status === 1)
+                                                <a href="#" class="btn btn-success mx-2 buttonIns" id="inscription"
+                                                    data-id="{{ $event->id }}">
+                                                    Inscribirme
+                                                </a>
+                                            @elseif ($event->status === 0)
+                                                {{-- If the service is inactive, you can't inscribated --}}
+                                            @else
+                                                <a href="#" class="btn btn-danger mx-2 buttonIns" id="cancel"
+                                                    data-id="{{ $event->id }}">
+                                                    Cancelar Inscripción
+                                                </a>
+                                            @endif
                                         @endif
-                                        <a href="#" class="btn btn-outline-primary mx-2" data-bs-toggle="modal"
-                                            data-bs-target="#editService{{ $event->id }}">Editar</a>
+                                        @if (auth()->user()->role_id === 1)
+                                            <a href="#" class="btn btn-outline-primary mx-2" data-bs-toggle="modal"
+                                                data-bs-target="#editService{{ $event->id }}">Editar</a>
+                                        @endif
                                     </div>
                                 </div>
                             </div>
@@ -81,6 +101,7 @@
                 <div class="row">
                     {{-- Card for supports --}}
                     @foreach ($supports as $support)
+                        {{-- <input type="text" name="{{ $su }}" id=""> --}}
                         <div class="col-6 pb-4">
                             <div class="card shadow-sm ">
                                 <div class="card-body">
@@ -97,18 +118,36 @@
                                             {{ $support->end }}</small></p>
                                     <p class="card-text">{{ $support->description }}</p>
                                     <div class="d-flex justify-content-center">
-                                        @if ($support->status === 1)
-                                            <a href="#" class="btn btn-danger mx-2 button" id="disable"
-                                                data-id="{{ $support->id }}">
-                                                Desactivar
-                                            </a>
+                                        @if (auth()->user()->role_id === 1)
+                                            @if ($support->status === 1)
+                                                <a href="#" class="btn btn-danger mx-2 button" id="disable"
+                                                    data-id="{{ $support->id }}">
+                                                    Desactivar
+                                                </a>
+                                            @else
+                                                <a href="#" class="btn btn-success mx-2 button" id="enable"
+                                                    data-id="{{ $support->id }}">
+                                                    Activar
+                                                </a>
+                                            @endif
                                         @else
-                                            <a href="#" class="btn btn-success mx-2 button" id="enable"
-                                                data-id="{{ $support->id }}">
-                                                Activar
-                                            </a>
+                                            @if (!$applicant->inscriptions()->exists() && $event->status === 1)
+                                                <a href="#" class="btn btn-success mx-2 buttonIns" id="inscription"
+                                                    data-id="{{ $support->id }}">
+                                                    Inscribirme
+                                                </a>
+                                            @elseif ($event->status === 0)
+                                                {{-- If the service is inactive, you can't inscribated --}}
+                                            @else
+                                                <a href="#" class="btn btn-danger mx-2 buttonIns" id="cancel"
+                                                    data-id="{{ $support->id }}">
+                                                    Cancelar Inscripción
+                                                </a>
+                                            @endif
                                         @endif
-                                        <a href="#" class="btn btn-outline-primary mx-2">Editar</a>
+                                        @if (auth()->user()->role_id === 1)
+                                            <a href="#" class="btn btn-outline-primary mx-2">Editar</a>
+                                        @endif
                                     </div>
                                 </div>
                             </div>

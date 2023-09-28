@@ -78,7 +78,7 @@
             axios.post('{{ route('services.update') }}', formData)
                 .then((result) => {
                     Swal.fire({
-                        icon:'success',
+                        icon: 'success',
                         title: result.data.message,
                         showConfirmButton: false,
                         timer: 1700
@@ -88,14 +88,52 @@
                 })
                 .catch((error) => {
                     Swal.fire({
-                    title: error.response.data.message,
-                    icon: 'error',
-                    confirmButtonText: 'Listo',
-                    showCloseButton: false,
-                    allowEscapeKey: false,
-                    allowOutsideClick: false,
-                })
+                        title: error.response.data.message,
+                        icon: 'error',
+                        confirmButtonText: 'Listo',
+                        showCloseButton: false,
+                        allowEscapeKey: false,
+                        allowOutsideClick: false,
+                    })
                 });
         })
     })
+
+    // Method for inscription a applicant to a service
+    let buttonsIns = document.querySelectorAll('.buttonIns')
+    buttonsIns.forEach((button) => {
+        button.addEventListener('click', function(event) {
+            event.preventDefault();
+            // Help with ChatGPT for get the id of the service
+            let service_id = this.dataset.id;
+            let id = this.id;
+
+            console.log(service_id);
+
+            let url = id === 'inscription' ? `inscriptions/store/${service_id}` :
+                `inscriptions/cancel/${service_id}`
+
+            console.log(id);
+            axios.post(url)
+                .then((result) => {
+                    Swal.fire({
+                        icon: 'info',
+                        title: result.data.message,
+                        showConfirmButton: false,
+                        timer: 1700
+                    }).then(() => {
+                        location.reload();
+                    })
+                })
+                .catch((error) => {
+                    Swal.fire({
+                        position: 'top-end',
+                        icon: 'error',
+                        title: error.response.data.message,
+                        showConfirmButton: false,
+                        timer: 1500
+                    })
+                })
+        })
+    });
 </script>

@@ -55,6 +55,16 @@ class User extends Authenticatable
     // Relationship with Appicant One to One
     public function role()
     {
-        return $this->belongsTo('App\Models\role', 'role_id', 'id');
+        return $this->belongsTo('App\Models\Roles', 'role_id', 'id');
+    }
+
+    public function hasAnyRole($roles)
+    {
+        return $this->role()->whereIn('name', $roles)->count() > 0;
+    }
+
+    public function hasRole($role)
+    {
+        return $this->role()->where('name', $role)->count() > 0;
     }
 }

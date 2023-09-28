@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Applicant;
+use App\Models\User;
 use App\Models\Inscription;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
@@ -10,16 +11,16 @@ use Illuminate\Support\Facades\DB;
 
 class InscriptionController extends Controller
 {
-    public function store(Request $request)
+    public function store($id)
     {
         try {
             $inscription = Inscription::create([
-                'service_id' => $request->input('service_id'),
+                'service_id' => $id,
                 // Help with ChatGpt for get the now date
                 'inscription_date' => Carbon::now()
             ]);
 
-            $inscription->applicants()->attach(1);
+            $inscription->applicants()->attach(auth()->user()->id);
 
             return response()->json([
                 'state' => true,
@@ -32,14 +33,16 @@ class InscriptionController extends Controller
         }
     }
 
-    public function cancelInscription(Request $request)
+    public function cancelInscription($id)
     {
         try {
-            $inscription =  Applicant::find(1)
+            $inscription =  Applicant::find(auth()->user()->id)
                 ->inscriptions()
-                ->where('service_id', $request->input('service_id'))
+                ->where('service_id', $id)
                 ->pluck('id')
                 ->first();
+
+            dd($inscription);
 
             $cancelInscription = Inscription::findOrFail($inscription);
             $cancelInscription->applicants()->detach();
@@ -48,7 +51,6 @@ class InscriptionController extends Controller
             return response()->json([
                 'state' => true,
                 'message' => 'Incripción cancelada correctamente',
-                'data' => $inscription
             ], 200);
         } catch (\Throwable $th) {
             return response()->json([

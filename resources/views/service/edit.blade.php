@@ -12,7 +12,7 @@
                 <form method="POST" id="formEdit">
                     @csrf
                     {{-- Row top --}}
-                    <input type="text" name="id" value="{{ $event->id }}">
+                    <input type="hidden" name="id" value="{{ $event->id }}">
                     <div class="row">
                         <div class="mb-3">
                             <label for="inputName" class="form-label fw-bold">Nombre del Evento</label>
@@ -62,8 +62,8 @@
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Cerrar</button>
-                        <button type="submit" class="btn btn-success">
-                            <i class="uil uil-save mx-1"></i>Guardar
+                        <button type="submit" class="btn btn-warning">
+                            <i class="uil uil-save mx-1"></i>Actualizar
                         </button>
                     </div>
                 </form>

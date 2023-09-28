@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Applicant;
 use App\Models\Service;
 use App\Models\ServiceCategory;
 use Illuminate\Http\Request;
@@ -51,7 +52,11 @@ class ServiceController extends Controller
 
             $categories = ServiceCategory::all();
 
-            return view('service.index', compact('events', 'supports', 'categories'));
+            $applicant = Applicant::where('user_id', auth()->user()->id);
+            $applicant->inscriptions()->exists();
+
+
+            return view('service.index', compact('events', 'supports', 'categories', 'applicant'));
         } catch (\Throwable $th) {
             return response()->json([
                 'message' => $th->getMessage(),
@@ -94,7 +99,7 @@ class ServiceController extends Controller
                 'end_date' => $request->input('end_date'),
                 'category_id' => $request->input('category_id'),
                 'status' => true,
-                'user_id' => 3,
+                'user_id' => auth()->user()->id,
             ]);
 
             return response()->json([
