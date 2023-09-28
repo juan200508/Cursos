@@ -56,7 +56,7 @@
                     <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown"
                         aria-expanded="false">
                         <i class="uil uil-user icon"></i>
-                        User
+                        Admin
                     </a>
                     <ul class="dropdown-menu">
                         <li><a class="dropdown-item" href="#">Info</a></li>

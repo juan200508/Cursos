@@ -62,3 +62,7 @@ Route::controller(InscriptionController::class)->group(function () {
 // Route::get('users/index', function () {
 //     return view('users.index');
 // })->name('users.index');
+
+Route::get('login/index', function () {
+    return view('autentication.login');
+})->name('autentication.login');
