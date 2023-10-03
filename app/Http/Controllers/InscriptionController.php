@@ -20,7 +20,9 @@ class InscriptionController extends Controller
                 'inscription_date' => Carbon::now()
             ]);
 
-            $inscription->applicants()->attach(auth()->user()->id);
+            $applicant = Applicant::where('user_id', auth()->user()->id)->first();
+
+            $inscription->applicants()->attach($applicant);
 
             return response()->json([
                 'state' => true,
@@ -36,15 +38,14 @@ class InscriptionController extends Controller
     public function cancelInscription($id)
     {
         try {
-            $inscription =  Applicant::find(auth()->user()->id)
+            $inscription =  Applicant::where('user_id', auth()->user()->id)
+                ->first()
                 ->inscriptions()
                 ->where('service_id', $id)
-                ->pluck('id')
-                ->first();
+                ->pluck('id');
 
-            $cancelInscription = Inscription::findOrFail($inscription);
-            $cancelInscription->applicants()->detach();
-            $cancelInscription->delete();
+            DB::table('inscriptions_applicants')->where('inscription_id', $inscription)->delete();
+            DB::table('inscriptions')->where('id', $inscription)->delete();
 
             return response()->json([
                 'state' => true,

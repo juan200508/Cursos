@@ -54,7 +54,9 @@ class ServiceController extends Controller
 
             // Help with chapGPT to list the services that an applicant has
             if (auth()->user()->role_id === 2) {
-                $applicant = Applicant::find(auth()->user()->id);
+                // $applicant = Applicant::where('user_id', auth()->user()->id);
+                $applicant = Applicant::where('user_id', auth()->user()->id)->first();
+                // $applicant = Applicant::find(auth()->user()->id);
                 $services = $applicant->inscriptions()->with('service')->get()->pluck('service');
             } else {
                 $services = 0;
@@ -226,7 +228,7 @@ class ServiceController extends Controller
     public function inscriptions()
     {
         try {
-            $applicant = Applicant::find(auth()->user()->id);
+            $applicant = Applicant::where('user_id', auth()->user()->id)->first();
             $services = $applicant->inscriptions()->with('service')->get()->pluck('service');
 
             // dd($services);
